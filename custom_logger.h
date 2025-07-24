@@ -2,7 +2,7 @@
  * @Author: lenomirei lenomirei@163.com
  * @Date: 2025-07-24 15:41:46
  * @LastEditors: lenomirei lenomirei@163.com
- * @LastEditTime: 2025-07-24 18:16:24
+ * @LastEditTime: 2025-07-24 18:45:19
  * @FilePath: \SpdlogWrapper\custom_logger.h
  * @Description: 
  * 
@@ -47,51 +47,51 @@ class CustomNSLogger {
   }
 
   template <typename... ArgList>
-  static void logger_trace(const std::string& logger_name, const std::string& format_print_str, const ArgList&... args) {
+  static void logger_trace(const std::string& logger_name, const std::string& format_print_str, ArgList&&... args) {
     SPDLOG_LOGGER_TRACE(spdlog::get(logger_name), format_print_str, std::forward<ArgList>(args)...);
   }
   template <typename... ArgList>
-  static void trace(const std::string& format_print_str, const ArgList&... args) {
+  static void trace(const std::string& format_print_str, ArgList&&... args) {
     if (default_logger_)
       SPDLOG_LOGGER_TRACE(default_logger_, format_print_str, std::forward<ArgList>(args)...);
   }
 
   template <typename... ArgList>
-  static void logger_debug(const std::string& logger_name, const std::string& format_print_str, const ArgList&... args) {
+  static void logger_debug(const std::string& logger_name, const std::string& format_print_str, ArgList&&... args) {
     SPDLOG_LOGGER_DEBUG(spdlog::get(logger_name), format_print_str, std::forward<ArgList>(args)...);
   }
   template <typename... ArgList>
-  static void debug(const std::string& format_print_str, const ArgList&... args) {
+  static void debug(const std::string& format_print_str, ArgList&&... args) {
     if (default_logger_)
       SPDLOG_LOGGER_DEBUG(default_logger_, format_print_str, std::forward<ArgList>(args)...);
   }
 
   template <typename... ArgList>
-  static void logger_info(const std::string& logger_name, const std::string& format_print_str, const ArgList&... args) {
+  static void logger_info(const std::string& logger_name, const std::string& format_print_str, ArgList&&... args) {
     SPDLOG_LOGGER_INFO(spdlog::get(logger_name), format_print_str, std::forward<ArgList>(args)...);
   }
   template <typename... ArgList>
-  static void info(const std::string& format_print_str, const ArgList&... args) {
+  static void info(const std::string& format_print_str, ArgList&&... args) {
     if (default_logger_)
       SPDLOG_LOGGER_INFO(default_logger_, format_print_str, std::forward<ArgList>(args)...);
   }
 
   template <typename... ArgList>
-  static void logger_warn(const std::string& logger_name, const std::string& format_print_str, const ArgList&... args) {
+  static void logger_warn(const std::string& logger_name, const std::string& format_print_str, ArgList&&... args) {
     SPDLOG_LOGGER_WARN(spdlog::get(logger_name), format_print_str, std::forward<ArgList>(args)...);
   }
   template <typename... ArgList>
-  static void warn(const std::string& format_print_str, const ArgList&... args) {
+  static void warn(const std::string& format_print_str, ArgList&&... args) {
     if (default_logger_)
       SPDLOG_LOGGER_WARN(default_logger_, format_print_str, std::forward<ArgList>(args)...);
   }
 
   template <typename... ArgList>
-  static void logger_error(const std::string& logger_name, const std::string& format_print_str, const ArgList&... args) {
+  static void logger_error(const std::string& logger_name, const std::string& format_print_str, ArgList&&... args) {
     SPDLOG_LOGGER_ERROR(spdlog::get(logger_name), format_print_str, std::forward<ArgList>(args)...);
   }
   template <typename... ArgList>
-  static void error(const std::string& format_print_str, const ArgList&... args) {
+  static void error(const std::string& format_print_str, ArgList&&... args) {
     if (default_logger_)
       SPDLOG_LOGGER_ERROR(default_logger_, format_print_str, std::forward<ArgList>(args)...);
   }
