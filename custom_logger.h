@@ -2,10 +2,10 @@
  * @Author: lenomirei lenomirei@163.com
  * @Date: 2025-07-24 15:41:46
  * @LastEditors: lenomirei lenomirei@163.com
- * @LastEditTime: 2025-07-24 18:45:19
+ * @LastEditTime: 2025-07-28 16:37:07
  * @FilePath: \SpdlogWrapper\custom_logger.h
- * @Description: 
- * 
+ * @Description:
+ *
  */
 #include <filesystem>
 #include <string>
@@ -16,7 +16,7 @@ namespace common {
 
 static spdlog::level::level_enum g_log_level = spdlog::level::DEFAULT_SDK_LOG_LEVEL;
 
-class CustomNSLogger {
+class CustomLogger {
  public:
   enum class LogLevel {
     trace,
@@ -47,58 +47,91 @@ class CustomNSLogger {
   }
 
   template <typename... ArgList>
-  static void logger_trace(const std::string& logger_name, const std::string& format_print_str, ArgList&&... args) {
-    SPDLOG_LOGGER_TRACE(spdlog::get(logger_name), format_print_str, std::forward<ArgList>(args)...);
+  static void logger_trace(const spdlog::source_loc& loc, const std::string& logger_name, const std::string& format_print_str, ArgList&&... args) {
+    auto logger = spdlog::get(logger_name);
+    if (logger)
+      logger->log(loc, spdlog::level::trace , format_print_str, std::forward<ArgList>(args)...);
   }
   template <typename... ArgList>
-  static void trace(const std::string& format_print_str, ArgList&&... args) {
+  static void trace(const spdlog::source_loc& loc, const std::string& format_print_str, ArgList&&... args) {
     if (default_logger_)
-      SPDLOG_LOGGER_TRACE(default_logger_, format_print_str, std::forward<ArgList>(args)...);
+      default_logger_->log(loc, spdlog::level::trace , format_print_str, std::forward<ArgList>(args)...);
   }
 
   template <typename... ArgList>
-  static void logger_debug(const std::string& logger_name, const std::string& format_print_str, ArgList&&... args) {
-    SPDLOG_LOGGER_DEBUG(spdlog::get(logger_name), format_print_str, std::forward<ArgList>(args)...);
+  static void logger_debug(const spdlog::source_loc& loc, const std::string& logger_name, const std::string& format_print_str, ArgList&&... args) {
+    auto logger = spdlog::get(logger_name);
+    if (logger)
+      logger->log(loc, spdlog::level::debug , format_print_str, std::forward<ArgList>(args)...);
   }
   template <typename... ArgList>
-  static void debug(const std::string& format_print_str, ArgList&&... args) {
+  static void debug(const spdlog::source_loc& loc, const std::string& format_print_str, ArgList&&... args) {
     if (default_logger_)
-      SPDLOG_LOGGER_DEBUG(default_logger_, format_print_str, std::forward<ArgList>(args)...);
+      default_logger_->log(loc, spdlog::level::debug , format_print_str, std::forward<ArgList>(args)...);
   }
 
   template <typename... ArgList>
-  static void logger_info(const std::string& logger_name, const std::string& format_print_str, ArgList&&... args) {
-    SPDLOG_LOGGER_INFO(spdlog::get(logger_name), format_print_str, std::forward<ArgList>(args)...);
+  static void logger_info(const spdlog::source_loc& loc, const std::string& logger_name, const std::string& format_print_str, ArgList&&... args) {
+    auto logger = spdlog::get(logger_name);
+    if (logger)
+      logger->log(loc, spdlog::level::info , format_print_str, std::forward<ArgList>(args)...);
   }
   template <typename... ArgList>
-  static void info(const std::string& format_print_str, ArgList&&... args) {
+  static void info(const spdlog::source_loc& loc, const std::string& format_print_str, ArgList&&... args) {
     if (default_logger_)
-      SPDLOG_LOGGER_INFO(default_logger_, format_print_str, std::forward<ArgList>(args)...);
+      default_logger_->log(loc, spdlog::level::info , format_print_str, std::forward<ArgList>(args)...);
   }
 
   template <typename... ArgList>
-  static void logger_warn(const std::string& logger_name, const std::string& format_print_str, ArgList&&... args) {
-    SPDLOG_LOGGER_WARN(spdlog::get(logger_name), format_print_str, std::forward<ArgList>(args)...);
+  static void logger_warn(const spdlog::source_loc& loc, const std::string& logger_name, const std::string& format_print_str, ArgList&&... args) {
+    auto logger = spdlog::get(logger_name);
+    if (logger)
+      logger->log(loc, spdlog::level::warn , format_print_str, std::forward<ArgList>(args)...);
   }
   template <typename... ArgList>
-  static void warn(const std::string& format_print_str, ArgList&&... args) {
+  static void warn(const spdlog::source_loc& loc, const std::string& format_print_str, ArgList&&... args) {
     if (default_logger_)
-      SPDLOG_LOGGER_WARN(default_logger_, format_print_str, std::forward<ArgList>(args)...);
+      default_logger_->log(loc, spdlog::level::warn , format_print_str, std::forward<ArgList>(args)...);
   }
 
   template <typename... ArgList>
-  static void logger_error(const std::string& logger_name, const std::string& format_print_str, ArgList&&... args) {
-    SPDLOG_LOGGER_ERROR(spdlog::get(logger_name), format_print_str, std::forward<ArgList>(args)...);
+  static void logger_error(const spdlog::source_loc& loc, const std::string& logger_name, const std::string& format_print_str, ArgList&&... args) {
+    auto logger = spdlog::get(logger_name);
+    if (logger)
+      logger->log(loc, spdlog::level::err , format_print_str, std::forward<ArgList>(args)...);
   }
   template <typename... ArgList>
-  static void error(const std::string& format_print_str, ArgList&&... args) {
+  static void error(const spdlog::source_loc& loc, const std::string& format_print_str, ArgList&&... args) {
     if (default_logger_)
-      SPDLOG_LOGGER_ERROR(default_logger_, format_print_str, std::forward<ArgList>(args)...);
+      default_logger_->log(loc, spdlog::level::err , format_print_str, std::forward<ArgList>(args)...);
   }
 
-  static std::shared_ptr<spdlog::logger> default_logger_;
-};
-
-std::shared_ptr<spdlog::logger> CustomNSLogger::default_logger_ = nullptr;
+  inline static std::shared_ptr<spdlog::logger> default_logger_ = nullptr;
+};  // class CustomLogger
 
 }  // namespace common
+
+#define CUSTOMLOGGER_LOGGER_TRACE(logger_name, fmt, ...) \
+  common::CustomLogger::logger_trace(spdlog::source_loc{__FILE__, __LINE__, SPDLOG_FUNCTION}, logger_name, fmt, ##__VA_ARGS__)
+#define CUSTOMLOGGER_TRACE(fmt, ...) \
+  common::CustomLogger::trace(spdlog::source_loc{__FILE__, __LINE__, SPDLOG_FUNCTION}, fmt, ##__VA_ARGS__)
+
+#define CUSTOMLOGGER_LOGGER_DEBUG(logger_name, fmt, ...) \
+  common::CustomLogger::logger_debug(spdlog::source_loc{__FILE__, __LINE__, SPDLOG_FUNCTION}, logger_name, fmt, ##__VA_ARGS__)
+#define CUSTOMLOGGER_DEBUG(fmt, ...) \
+  common::CustomLogger::debug(spdlog::source_loc{__FILE__, __LINE__, SPDLOG_FUNCTION}, fmt, ##__VA_ARGS__)
+
+#define CUSTOMLOGGER_LOGGER_INFO(logger_name, fmt, ...) \
+  common::CustomLogger::logger_info(spdlog::source_loc{__FILE__, __LINE__, SPDLOG_FUNCTION}, logger_name, fmt, ##__VA_ARGS__)
+#define CUSTOMLOGGER_INFO(fmt, ...) \
+  common::CustomLogger::info(spdlog::source_loc{__FILE__, __LINE__, SPDLOG_FUNCTION}, fmt, ##__VA_ARGS__)
+
+#define CUSTOMLOGGER_LOGGER_WARN(logger_name, fmt, ...) \
+  common::CustomLogger::logger_warn(spdlog::source_loc{__FILE__, __LINE__, SPDLOG_FUNCTION}, logger_name, fmt, ##__VA_ARGS__)
+#define CUSTOMLOGGER_WARN(fmt, ...) \
+  common::CustomLogger::warn(spdlog::source_loc{__FILE__, __LINE__, SPDLOG_FUNCTION}, fmt, ##__VA_ARGS__)
+
+#define CUSTOMLOGGER_LOGGER_ERROR(logger_name, fmt, ...) \
+  common::CustomLogger::logger_error(spdlog::source_loc{__FILE__, __LINE__, SPDLOG_FUNCTION}, logger_name, fmt, ##__VA_ARGS__)
+#define CUSTOMLOGGER_ERROR(fmt, ...) \
+  common::CustomLogger::error(spdlog::source_loc{__FILE__, __LINE__, SPDLOG_FUNCTION}, fmt, ##__VA_ARGS__)
